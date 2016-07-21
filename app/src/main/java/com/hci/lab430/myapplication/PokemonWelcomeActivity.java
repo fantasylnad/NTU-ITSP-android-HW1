@@ -1,8 +1,12 @@
 package com.hci.lab430.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,11 +16,12 @@ import android.widget.TextView;
 /**
  * Created by lab430 on 16/7/20.
  */
-public class PokemonWelcomeActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
+public class PokemonWelcomeActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,EditText.OnEditorActionListener {
 
     TextView infoText;
     EditText nameEditText;
     RadioGroup optionGroup;
+    Button confirmBtn;
     CheckBox hideCheckBox; // 可以使用這個成員變數來記住抓到的Checkbox物件
     int selectedOptionIndex = 0;
 
@@ -33,8 +38,9 @@ public class PokemonWelcomeActivity extends AppCompatActivity implements View.On
 
         infoText = (TextView)findViewById(R.id.info_text);
         nameEditText = (EditText)findViewById(R.id.name_editText);
+        nameEditText.setOnEditorActionListener(this);
 
-        Button confirmBtn = (Button)findViewById(R.id.confirm_btn);
+        confirmBtn = (Button)findViewById(R.id.confirm_btn);
         confirmBtn.setOnClickListener(this);
 
         optionGroup = (RadioGroup)findViewById(R.id.option_radioGrp);
@@ -73,4 +79,19 @@ public class PokemonWelcomeActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            //dismiss virtual keyboard
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+
+            imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+
+            //simulate button clicked
+            confirmBtn.performClick();
+            return true;
+        }
+        return false;
+    }
 }
