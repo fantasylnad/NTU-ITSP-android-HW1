@@ -45,26 +45,34 @@
             android:layout_below="@+id/name_editText"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:id="@+id/option_radioGrp">
+            android:id="@+id/option_radioGrp"
+            android:orientation="horizontal"
+            android:clipToPadding="false">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小火龍"
                 android:id="@+id/option1"
-                android:checked="true" />
+                android:checked="true"
+                android:drawableRight="@drawable/charmander_thumbnail"
+                android:drawablePadding="-30dp"
+                android:layout_marginRight="-20dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="傑尼龜"
-                android:id="@+id/option2" />
+                android:id="@+id/option2"
+                android:drawableRight="@drawable/squirtle_thumbnail"
+                android:drawablePadding="-30dp"
+                android:layout_marginRight="-20dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="妙蛙種子"
-                android:id="@+id/option3" />
+                android:id="@+id/option3"
+                android:drawableRight="@drawable/bulbasaur_thumbnail"
+                android:drawablePadding="-30dp"
+                android:layout_marginRight="-20dp" />
         </RadioGroup>
 
         <Button
@@ -75,6 +83,16 @@
             android:layout_below="@+id/option_radioGrp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hide"
+            android:id="@+id/checkBox"
+            android:checked="false"
+            android:layout_alignTop="@+id/name_editText"
+            android:layout_toRightOf="@+id/name_editText"
+            android:layout_toEndOf="@+id/name_editText" />
 
     </RelativeLayout>
 </LinearLayout>

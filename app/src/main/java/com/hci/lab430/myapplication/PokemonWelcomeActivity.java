@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -16,13 +17,14 @@ import android.widget.TextView;
 /**
  * Created by lab430 on 16/7/20.
  */
-public class PokemonWelcomeActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,EditText.OnEditorActionListener {
+public class PokemonWelcomeActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,EditText.OnEditorActionListener, CompoundButton.OnCheckedChangeListener {
 
     TextView infoText;
     EditText nameEditText;
     RadioGroup optionGroup;
     Button confirmBtn;
     CheckBox hideCheckBox; // 可以使用這個成員變數來記住抓到的Checkbox物件
+    boolean isNameHide = false;
     int selectedOptionIndex = 0;
 
     String[] pokemonNames = new String[]{
@@ -49,6 +51,8 @@ public class PokemonWelcomeActivity extends AppCompatActivity implements View.On
         // 實作類似以上的步驟去找到相對應的Checkbox元件
         // 並設定listener去listen被勾取的事件（可參考Button以及OptionGroup）
         // 設定TextView的text可以參考onClick裡infoText的邏輯
+        hideCheckBox = (CheckBox)findViewById(R.id.checkBox);
+        hideCheckBox.setOnCheckedChangeListener(this);
 
     }
 
@@ -57,7 +61,11 @@ public class PokemonWelcomeActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         int viewId = view.getId();
         if(viewId == R.id.confirm_btn) {
-            infoText.setText(String.format("你好, 訓練家%s 歡迎來到神奇寶貝的世界 你的第一個夥伴是%s", nameEditText.getText(), pokemonNames[selectedOptionIndex]));
+            if(isNameHide){
+                infoText.setText(String.format("你好, 訓練家 歡迎來到神奇寶貝的世界 你的第一個夥伴是%s", pokemonNames[selectedOptionIndex]));
+            } else {
+                infoText.setText(String.format("你好, 訓練家%s 歡迎來到神奇寶貝的世界 你的第一個夥伴是%s", nameEditText.getText(), pokemonNames[selectedOptionIndex]));
+            }
         }
     }
 
@@ -93,5 +101,13 @@ public class PokemonWelcomeActivity extends AppCompatActivity implements View.On
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        int chkBtnId = buttonView.getId();
+        if (chkBtnId == hideCheckBox.getId()){
+            isNameHide = isChecked;
+        }
     }
 }
